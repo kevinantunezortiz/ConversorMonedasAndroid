@@ -4,8 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
@@ -28,7 +26,7 @@ public class Resultado {
     public Object[] getDatos(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
         this.fechaHoraActual = sdf.format(new Date());
-        return   new Object[]{moneda1, moneda2, cantidad,valor,total,fechaHoraActual};
+        return new Object[]{moneda1, moneda2, cantidad,valor,total,fechaHoraActual};
     }
 
     public double getValor() {
