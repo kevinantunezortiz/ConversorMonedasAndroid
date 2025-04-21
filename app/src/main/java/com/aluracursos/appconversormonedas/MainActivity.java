@@ -67,22 +67,28 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Ingrese una cantidad", Toast.LENGTH_SHORT);
             toast.show();
         }else{
-            apiMonedas.ObtenerResultado(moneda1Codigo, moneda2Codigo, cantidad , new ApiMonedas.ResultadoCallback() {
-                @Override
-                public void onResultadoObtenido(Resultado resultado) {
-                    Log.d("Resultado", resultado.toString());
-                    txtValor.setText(String.format("1 %s = %s", moneda1Codigo, resultado.getValor()));
-                    txtTotal.setText(String.format("Total: %s %s", resultado.getTotal(), moneda2Codigo));
-                    resultado.setMoneda1(moneda1Codigo+"-"+moneda1);
-                    resultado.setMoneda2(moneda2Codigo+"-"+moneda2);
-                    resultado.setCantidad(cantidad);
-                }
+            if(cantidad.equals(".")){
+                Toast.makeText(this, "La cantidad no puede ser solo un punto", Toast.LENGTH_SHORT).show();
+            }else{
 
-                @Override
-                public void onError(Throwable t) {
-                    Log.e("Error", t.getMessage());
-                }
-            });
+
+                apiMonedas.ObtenerResultado(moneda1Codigo, moneda2Codigo, cantidad , new ApiMonedas.ResultadoCallback() {
+                    @Override
+                    public void onResultadoObtenido(Resultado resultado) {
+                        Log.d("Resultado", resultado.toString());
+                        txtValor.setText(String.format("1 %s = %s", moneda1Codigo, resultado.getValor()));
+                        txtTotal.setText(String.format("Total: %s %s", resultado.getTotal(), moneda2Codigo));
+                        resultado.setMoneda1(moneda1Codigo+"-"+moneda1);
+                        resultado.setMoneda2(moneda2Codigo+"-"+moneda2);
+                        resultado.setCantidad(cantidad);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        Log.e("Error", t.getMessage());
+                    }
+                });
+            }
         }
     }
 }
