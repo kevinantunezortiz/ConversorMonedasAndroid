@@ -1,13 +1,12 @@
 package com.aluracursos.appconversormonedas;
 
-import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +16,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
     TextView txtValor, txtTotal;
     HashMap<String, String> monedas;
 
-    Button btnConvertir;
+    Button btnConvertir, btnHistorial;
+
+    HistorialMonedas historialMonedas ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        historialMonedas = new HistorialMonedas(getApplicationContext());
         txtCantidad = findViewById(R.id.txtCantidad);
         comboMonedas1 = findViewById(R.id.comboMonedas1);
         monedas = apiMonedas.obtenerMonedas();
@@ -55,8 +56,13 @@ public class MainActivity extends AppCompatActivity {
         txtTotal = findViewById(R.id.txtTotal);
         btnConvertir = findViewById(R.id.btnConvertir);
         btnConvertir.setOnClickListener(v -> convertirMonedas());
+        btnHistorial = findViewById(R.id.btnHistorial);
+        btnHistorial.setOnClickListener(v -> mostrarHistorial());
     }
-
+    public void mostrarHistorial(){
+        Intent intent = new Intent(this, HistorialActivity.class);
+        startActivity(intent);
+    }
     public void convertirMonedas(){
         String moneda1 = comboMonedas1.getSelectedItem().toString();
         String moneda2 = comboMonedas2.getSelectedItem().toString();
@@ -81,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         resultado.setMoneda1(moneda1Codigo+"-"+moneda1);
                         resultado.setMoneda2(moneda2Codigo+"-"+moneda2);
                         resultado.setCantidad(cantidad);
+                        historialMonedas.guardarResultado(resultado);
                     }
 
                     @Override

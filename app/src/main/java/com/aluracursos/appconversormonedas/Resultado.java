@@ -20,14 +20,11 @@ public class Resultado {
     }
 
     public String getFechaHoraActual() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
+        this.fechaHoraActual = sdf.format(new Date());
         return fechaHoraActual;
     }
 
-    public Object[] getDatos(){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
-        this.fechaHoraActual = sdf.format(new Date());
-        return new Object[]{moneda1, moneda2, cantidad,valor,total,fechaHoraActual};
-    }
 
     public double getValor() {
         return valor;
@@ -49,17 +46,13 @@ public class Resultado {
         this.cantidad = cantidad;
     }
 
-
-    @Override
-    public String toString() {
-        return "Resultado{" +
-                "valor=" + valor +
-                ", total=" + total +
-                ", moneda1='" + moneda1 + '\'' +
-                ", moneda2='" + moneda2 + '\'' +
-                ", cantidad='" + cantidad + '\'' +
-                ", fechaHoraActual='" + fechaHoraActual + '\'' +
-                '}';
+    public String getMoneda2() {
+        return moneda2;
     }
-
+    public String getCantidad() {
+        return cantidad;
+    }
+    public String getMoneda1() {
+        return moneda1;
+    }
 }
